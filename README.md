@@ -1,49 +1,50 @@
-# 🔍 Whois Search App 🌐
+# React + TypeScript + Vite
 
-Easily lookup domain information with our sleek and user-friendly Whois Search App! 🚀
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## ✨ Features
+Currently, two official plugins are available:
 
-- 🖥️ Clean, modern UI with dark mode support
-- 🔎 Quick and easy domain lookups
-- 💨 Fast performance with minimal dependencies
-- 📱 Fully responsive design
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 🛠️ Tech Stack
+## Expanding the ESLint configuration
 
-- HTML5
-- CSS3 (with Tailwind CSS)
-- TypeScript
-- Vite
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## 🚀 Getting Started
+- Configure the top-level `parserOptions` property like this:
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/fordus/whois.git
-   ```
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-2. Navigate to the project directory:
-   ```
-   cd whois
-   ```
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-3. Install dependencies:
-   ```
-   npm install
-   ```
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-4. Run the development server:
-   ```
-   npm run dev
-   ```
-
-5. Open your browser and visit `http://localhost:3000`
-
-## 🤝 Contributing
-
-We welcome contributions! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
